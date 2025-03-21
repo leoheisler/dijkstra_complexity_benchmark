@@ -70,7 +70,7 @@ public:
 
     //heap functions
     //Inserts node in heap 
-    void insert(int distance, int vertex) {
+    void insert(unsigned distance, unsigned vertex) {
         if (vertex_heap_map.count(vertex)) {
             //update distance if vertex is already in heap
             if (distance < heap_queue[vertex_heap_map[vertex]].distance) {
@@ -105,6 +105,11 @@ public:
         }
 
         return min_node;
+    }
+
+    // Returns heap state
+    bool is_empty() {
+        return heap_queue.empty();
     }
     
 };
