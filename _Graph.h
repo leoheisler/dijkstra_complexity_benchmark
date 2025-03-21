@@ -20,6 +20,7 @@ public:
     int get_num_edges() { return num_edges; }
     int get_num_vertex() { return num_vertex; }
     std::vector<std::vector<Edge>> get_graph_mem() { return graph_mem; }
+    std::vector<Edge> get_neighbors(int i) { return graph_mem[i]; }
 
 
 
