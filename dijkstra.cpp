@@ -33,9 +33,21 @@ int main(int argc, char* argv[]){
     unsigned vertex_num = 0, edges_num = 0;
     unsigned source_index = std::stoi(argv[1]);
     unsigned target_index = std::stoi(argv[2]);
+
+    source_index--;
+    target_index--;
+
     Graph g;
     Read::read_dimacs(std::cin, vertex_num, edges_num, g);
-    std::vector<unsigned> distances = dijkstra(2,vertex_num,g,source_index);
 
-    return distances[target_index];
+    try{
+        std::vector<unsigned> distances = dijkstra(2,vertex_num,g,source_index);
+        for( int i = 0; i < distances.size(); i++){
+            std::cout << "Vertice: " << i + 1 << " valor encontrado: "<< distances[i] << std::endl;
+        }
+    }catch(const std::exception& e){
+        std::cerr << "Exceção capturada: " << e.what() << std::endl;
+    }
+
+    return 0;
 }

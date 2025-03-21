@@ -40,4 +40,14 @@ public:
         this->num_edges++;
         graph_mem[source].push_back(new_edge);
     }
+
+    void print_graph(){
+        std::vector<Graph::Edge> edges;
+        for(int i = 0; i < graph_mem.size(); i++){
+            edges = graph_mem[i];
+            std::cout << "nodo: " << i << std::endl;
+            for(int j = 0; j < edges.size(); j++)
+                std::cout << "   target: " << edges[j].target << " peso:" << edges[j].weight << std::endl;
+        }
+    }
 };
