@@ -35,8 +35,8 @@ public:
     }
 
     void add_edge(int source, int target, int weight) {
-        Edge new_edge = {weight, target - 1};
+        Edge new_edge = {weight, target};
         this->num_edges++;
-        graph_mem[source - 1].push_back(new_edge);
+        graph_mem[source].push_back(new_edge);
     }
 };

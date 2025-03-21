@@ -21,17 +21,17 @@ public:
     unsigned i=0;
     while (i++ < edges_num) {
       getline(in,line);
+      if (line.substr(0,1) == "c") i--;
       if (line.substr(0,2) == "a ") {
         std::stringstream arc(line);
         unsigned u,v,w;
         char ac;
         arc >> ac >> u >> v >> w;
-        // processa arco (u,v) com peso w
-        g.add_edge(u,v,w);
+        // (2) process arc (u,v) with weight w
+        g.add_edge(u - 1,v - 1,w);
       }
     }
   }
-
 };
 
 
