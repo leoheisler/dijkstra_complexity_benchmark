@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     
     
     // (2) print out in DIMACS challenge format
-    ofstream outfile("graphs/4_vertices_foll.gr");
+    ofstream outfile("../graphs/4_vertices_foll.gr");
     if (!outfile.is_open()) {
         cerr << "Erro ao abrir o arquivo para escrita." << endl;
         return 1;
