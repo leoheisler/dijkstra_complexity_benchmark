@@ -79,9 +79,9 @@ public:
             }
         } else {
             Node new_vertex = {distance,vertex};
-            int new_vertex_index = heap_queue.size() - 1;
-
             heap_queue.push_back(new_vertex);
+            
+            int new_vertex_index = heap_queue.size() - 1;
             vertex_heap_map[vertex] = new_vertex_index;
             sift_up(new_vertex_index);
         }

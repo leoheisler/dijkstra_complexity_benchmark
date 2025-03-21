@@ -19,7 +19,7 @@ std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, unsigned sourc
         //update distance and insert neighbor in heap
         for (Graph::Edge edge : g.get_neighbors(heap_head.vertex)) {
             if (heap_head.distance + edge.weight < dist[edge.target]) {
-                dist[edge.target] = dist[heap_head.vertex] + edge.weight;
+                dist[edge.target] = heap_head.distance + edge.weight;
                 kHeap.insert(dist[edge.target], edge.target);
             }
         }
