@@ -9,10 +9,18 @@ public:
         unsigned vertex;
     };
 private:
+    //control vars
     int k;
+    unsigned num_inserts = 0;
+    unsigned num_updates = 0;
+    unsigned num_deletes = 0;
+    unsigned num_sift_ups = 0;
+    unsigned num_sift_downs = 0;
+
     std::vector<Node> heap_queue = {};
     std::unordered_map<int,int> vertex_heap_map;
 
+    /*  PRIVATE FUNCTS */
     // Returns parent heap index
     // of child i
     int get_parent_index(int i) {
@@ -29,6 +37,8 @@ private:
     // Reorders heap to preserve min_heap property
     // swaps child and father priority, sending child up
     void sift_up(int child_index) {
+        num_sift_ups++;
+
         while (child_index > 0 && heap_queue[child_index].distance < heap_queue[get_parent_index(child_index)].distance) {
             std::swap(heap_queue[child_index], heap_queue[get_parent_index(child_index)]);
 
@@ -43,6 +53,8 @@ private:
     // Reorders heap to preserve min_heap property
     // swaps child and father priority, sending father up
     void sift_down(int parent_index) {
+        num_sift_downs++;
+
         int smallest_index = parent_index;
 
         //check if any children has a smaller distance
@@ -68,16 +80,28 @@ public:
     //contructor
     Heap(int k): k(k) {}
 
+    //getters
+    unsigned get_num_inserts(){ return this->num_inserts; }
+    unsigned get_num_deletes(){ return this->num_deletes; }
+    unsigned get_num_updates(){ return this->num_updates; }
+    unsigned get_num_siftups(){ return this->num_sift_ups;}
+    unsigned get_num_siftdowns(){ return this->num_sift_downs; }
+
     //heap functions
     //Inserts node in heap 
     void insert(unsigned distance, unsigned vertex) {
+
         if (vertex_heap_map.count(vertex)) {
             //update distance if vertex is already in heap
             if (distance < heap_queue[vertex_heap_map[vertex]].distance) {
+                num_updates++;
+
                 heap_queue[vertex_heap_map[vertex]].distance = distance;
                 sift_up(vertex_heap_map[vertex]);
             }
         } else {
+            num_inserts++;
+
             Node new_vertex = {distance,vertex};
             heap_queue.push_back(new_vertex);
             
@@ -89,6 +113,8 @@ public:
     
     //extract min
     Node extract_min() {
+        num_deletes++;
+
         //release first node
         Node min_node = heap_queue[0];
         vertex_heap_map.erase(min_node.vertex);

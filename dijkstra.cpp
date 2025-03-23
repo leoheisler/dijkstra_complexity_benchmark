@@ -2,9 +2,19 @@
 #include "_Heap.h"
 #include <cassert>
 #include <climits>
+#include <fstream>
 
 
 std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, unsigned source_index){
+
+    //set outfile
+    std::ofstream outfile("results.txt",std::ios::app);
+    if (!outfile.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo para escrita." << std::endl;
+        exit;
+    }
+
+    //start funct
     std::vector<unsigned> dist(num_vertices, INT_MAX); 
     dist[source_index] = 0;
 
@@ -24,7 +34,12 @@ std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, unsigned sourc
             }
         }
     }
-
+    outfile << "Num inserts: " << kHeap.get_num_inserts() << std::endl;
+    outfile << "Num updates: " << kHeap.get_num_updates() << std::endl;
+    outfile << "Num deletes: " << kHeap.get_num_deletes() << std::endl;
+    outfile << "Num sift_ups: " << kHeap.get_num_siftups() << std::endl;
+    outfile << "Num sift_downs: " << kHeap.get_num_siftdowns() << std::endl;
+    outfile << "------------------" << std::endl;
     return dist;
 }
 
@@ -42,9 +57,12 @@ int main(int argc, char* argv[]){
 
     try{
         std::vector<unsigned> distances = dijkstra(2,vertex_num,g,source_index);
-        for( int i = 0; i < distances.size(); i++){
-            std::cout << "Vertice: " << i + 1 << " valor encontrado: "<< distances[i] << std::endl;
+        if(distances[target_index] != INT_MAX){
+            std::cout << distances[target_index] << std::endl;
+        }else{
+            std::cout << "inf" << std::endl;
         }
+
     }catch(const std::exception& e){
         std::cerr << "Exceção capturada: " << e.what() << std::endl;
     }
