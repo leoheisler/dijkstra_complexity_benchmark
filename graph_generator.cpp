@@ -13,9 +13,10 @@ const unsigned maxweight = 1000;
 
 
 int main(int argc, char *argv[]) {
-    assert(argc == 3);
+    assert(argc == 4);
     unsigned vertex_number = atoi(argv[1]);
     double probability = atof(argv[2]);
+    std::string graph_name = argv[3];
 
     srand48(time(0));
 
@@ -27,12 +28,12 @@ int main(int argc, char *argv[]) {
         for (unsigned j = 0; j < vertex_number; j++)
             if (i != j && drand48() < probability) {
                 int weight = lrand48() % maxweight;
-                g.add_edge(i + 1, j + 1, weight);
+                g.add_edge(i, j, weight);
             }
     
     
     // (2) print out in DIMACS challenge format
-    ofstream outfile("../graphs/4_vertices_foll.gr");
+    ofstream outfile(graph_name);
     if (!outfile.is_open()) {
         cerr << "Erro ao abrir o arquivo para escrita." << endl;
         return 1;
