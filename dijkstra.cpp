@@ -34,6 +34,7 @@ std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, unsigned sourc
             }
         }
     }
+    outfile << "Results from: " << g.get_num_vertex() << "_" << g.get_num_edges() << std::endl;
     outfile << "Num inserts: " << kHeap.get_num_inserts() << std::endl;
     outfile << "Num updates: " << kHeap.get_num_updates() << std::endl;
     outfile << "Num deletes: " << kHeap.get_num_deletes() << std::endl;
@@ -46,15 +47,27 @@ std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, unsigned sourc
 int main(int argc, char* argv[]){
     assert(argc == 3);
     unsigned vertex_num = 0, edges_num = 0;
-    unsigned source_index = std::stoi(argv[1]);
-    unsigned target_index = std::stoi(argv[2]);
-
-    source_index--;
-    target_index--;
+    unsigned source_index = 0;
+    unsigned target_index = 0;
 
     Graph g;
     Read::read_dimacs(std::cin, vertex_num, edges_num, g);
+    srand48(time(0));
 
+    //randomize pathing if value sent is "?"
+    if(std::string (argv[1]) != "?"){
+        source_index = std::stoi(argv[1]);
+        target_index = std::stoi(argv[2]);
+        source_index--;
+        target_index--;
+    }else{
+        do{
+            source_index = lrand48() % vertex_num;
+            target_index = lrand48() % vertex_num;
+        }while (source_index == target_index);
+    }
+    
+    //call dijkstras algorithm and log the result
     try{
         std::vector<unsigned> distances = dijkstra(2,vertex_num,g,source_index);
         if(distances[target_index] != INT_MAX){
