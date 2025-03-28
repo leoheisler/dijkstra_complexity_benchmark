@@ -1,4 +1,5 @@
 #!/bin/bash
+: << 'EOF'
 
 vertex_num=12000
 graph_prefix="graphs/"
@@ -83,5 +84,27 @@ for i in {1..3}; do
     
     ./build/gen "$vertex_num" "$prob" "$graph_name"
     
+    sleep 1
+done
+EOF
+
+echo "creating 30 random graphs"
+
+graph_prefix="graphs/rand_graphs/"
+
+min_vertex=5000
+max_vertex=32000
+
+min_p=0.01
+max_p=0.1
+for i in {1..30}; do
+    vertex=$((RANDOM % (max_vertex - min_vertex + 1) + min_vertex))
+    p=$(awk -v min="$min_p" -v max="$max_p" 'BEGIN { srand(); print min + (max - min) * rand() }')
+
+    graph_name="${graph_prefix}${vertex}_${p}.gr"
+    echo "creating vertex:${vertex}_prob: ${p} graph"
+
+    ./build/gen "$vertex" "$p" "$graph_name"
+
     sleep 1
 done
