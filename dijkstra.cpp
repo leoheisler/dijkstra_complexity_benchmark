@@ -34,7 +34,6 @@ std::vector<unsigned> dijkstra(int k, int num_vertices, Graph& g, Heap& kHeap, u
 double calc_avg(std::vector<double>  r_values){
     double avg = 0;
     for(double val : r_values){
-        std::cout << val << std::endl;
         avg += val;
     }
 
