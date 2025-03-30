@@ -3,3 +3,4 @@ build/
 auto/
 results.txt
 .vscode
+venv/
